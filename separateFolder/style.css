@@ -1,0 +1,31 @@
+body {
+  box-sizing: border-box;
+}
+
+.wrapper{
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 750px;
+  font-size: 48px;
+}
+
+.greting{
+  font-size: 96px;
+  color:salmon;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.current-time{
+  color:seagreen;
+}
+
+.new-year{
+  color:violet;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+
+
