@@ -80,6 +80,8 @@ function countTime(deadLine) {
 
     }
 
+    updateClock();
+
     setInterval(updateClock, 1000);
 
     // if(getTimeRemaining().timeRemaining > 0) {

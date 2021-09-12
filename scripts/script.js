@@ -21,28 +21,29 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function updateClock(){
       let timer = getTimeRemaining();
-      if (timer.hours > 9) timerHours.textContent = timer.hours;
+      clockPrinter(timerHours, timer.hours);
+      clockPrinter(timerMinutes, timer.minutes);
+      clockPrinter(timerSeconds, timer.seconds);
+    }
+
+    function clockPrinter(element, value){
+      if (value > 9) element.textContent = value;
       else {
-        timerHours.textContent = '0' + timer.hours;
-      }
-      if (timer.minutes > 9) timerMinutes.textContent = timer.minutes;
-      else {
-        timerMinutes.textContent = '0' + timer.minutes;
-      }
-      if (timer.seconds > 9) timerSeconds.textContent = timer.seconds;
-      else {
-        timerSeconds.textContent = '0' + timer.seconds;
+        element.textContent = '0' + value;
       }
     }
 
+
+
     if(getTimeRemaining().timeRemaining > 0) {
-        setInterval(updateClock, 1000);
-      } else {
-        timerHours.textContent = '00';
-        timerMinutes.textContent = '00';
-        timerSeconds.textContent = '00';
-        timerNumbers.style.color = 'red';
-      }
+      updateClock();
+      setInterval(updateClock, 1000);
+    } else {
+      timerHours.textContent = '00';
+      timerMinutes.textContent = '00';
+      timerSeconds.textContent = '00';
+      timerNumbers.style.color = 'red';
+    }
   }
 
   countTimer('13 september 2021');
