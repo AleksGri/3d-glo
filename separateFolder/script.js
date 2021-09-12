@@ -28,7 +28,8 @@ function countTime(deadLine) {
             minutes = new Date().getMinutes(),
             hours = new Date().getHours(),
             day = new Date().getDay();
-      return {daysTillNY, hours, minutes, seconds, day};      
+      return {daysTillNY, hours, minutes, seconds, day};
+            
     }
 
     function updateClock(){
@@ -63,35 +64,24 @@ function countTime(deadLine) {
         showGreteng.textContent = 'Доброй ночи';
         standartHours = clock.hours - 12;
       } 
-      if (standartHours > 9) showHours.textContent = standartHours;
-      else {
-        showHours.textContent = '0' + standartHours;
-      }
-      if (clock.minutes > 9) showMinutes.textContent = clock.minutes;
-      else {
-        showMinutes.textContent = '0' + clock.minutes;
-      }
-      if (clock.seconds > 9) showSeconds.textContent = clock.seconds;
-      else {
-        showSeconds.textContent = '0' + clock.seconds;
-      }
+      clockPrinter(showHours, standartHours);
+      clockPrinter(showMinutes, clock.minutes);
+      clockPrinter(showSeconds, clock.seconds);
       showDay.textContent = days[clock.day];
       showDaysTillNY.textContent = clock.daysTillNY;
+    }
 
+
+    function clockPrinter(element, value){
+      if (value > 9) element.textContent = value;
+      else {
+        element.textContent = '0' + value;
+      }
     }
 
     updateClock();
 
     setInterval(updateClock, 1000);
-
-    // if(getTimeRemaining().timeRemaining > 0) {
-    //     setInterval(updateClock, 1000);
-    //   } else {
-    //     timerHours.textContent = '00';
-    //     timerMinutes.textContent = '00';
-    //     timerSeconds.textContent = '00';
-    //     timerNumbers.style.color = 'red';
-    //   }
   }
 
   countTime('2022');
