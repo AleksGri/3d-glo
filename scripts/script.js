@@ -106,48 +106,17 @@ window.addEventListener('DOMContentLoaded', function() {
         initiateTimeOut();
       };
 
-
-      const popAnimation1 = function (position, displayValue){
-        popupWindow.style.top = `${position}%`;
-        function initiateTimeOut() {
-          setTimeout(function() { positionChanger();}, 50);
-        }
-
-        function positionChanger() {
-          if(displayValue === 'block') {
-            popupWindow.style.display = displayValue;
-            position += 10;
-            popupWindow.style.top = `${position}%`;
-            if (position < 10) {
-                initiateTimeOut(); 
-            }
-          } else {
-            position -= 10;
-            popupWindow.style.top = `${position}%`;
-            if (position > -100) {
-                initiateTimeOut(); 
-            } else {
-              popupWindow.style.display = displayValue;
-            }
-          } 
-        }
-        initiateTimeOut();
-      };
-
-
       if(!popupWindow.style.display || popupWindow.style.display === 'none') {
-        if(screen.width < 768) {
+        if(window.innerWidth < 768) {
           popupWindow.style.display = 'block';  
         } else {
           popAnimation(0, 'block');
-          popAnimation1(-100, 'block');
         }
       } else {
-        if(screen.width < 768) {
+        if(window.innerWidth < 768) {
           popupWindow.style.display = 'none';
         } else {
           popAnimation(100, 'none');
-          popAnimation1(10, 'none');
         }
       }
     };
