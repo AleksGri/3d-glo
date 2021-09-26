@@ -1,6 +1,21 @@
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
+  const validator = (type, value) => {
+    switch (type) {
+      case 'text':
+        value = value.replace(/[^а-яё]/i, '');
+        return value;
+      case 'email':
+        let email = value.match(/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/g);
+        return email;
+      case 'tel':
+        let phone = value.match(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/g);
+        return phone;
+    }
+
+  };
+
   //Timer
   function countTimer(deadLine) {
     const timerHours = document.querySelector('#timer-hours'),
@@ -100,6 +115,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const popupBtn = document.querySelectorAll('.popup-btn'),
           popupWindow = document.querySelector('.popup');
+    let name,
+        phone,
+        email;
 
     const popupHendler = function() {
 
@@ -158,7 +176,40 @@ window.addEventListener('DOMContentLoaded', function() {
 
         if (!target) {
           popupHendler();
+        } else {
+          const fieldHandler = () => {
+            const field = popupWindow.querySelector('input');
+            let type = field.type;
+            let value = field.value;
+            console.log(type, value);
+            validator(type,value);
+          };
+
+
+          popupWindow.querySelector('#form3-name').addEventListener('change', ()=>{
+            const field = popupWindow.querySelector('input');
+            let type = field.type;
+            let value = field.value;
+            console.log(type, value);
+            validator(type,value);
+
+          });
+          popupWindow.querySelector('#form3-phone').addEventListener('change', ()=>{
+          const field = popupWindow.querySelector('input');
+            let type = field.type;
+            let value = field.value;
+            console.log(type, value);
+            validator(type,value);
+          });
+          popupWindow.querySelector('#form3-email').addEventListener('change', ()=>{
+            const field = popupWindow.querySelector('input');
+            let type = field.type;
+            let value = field.value;
+            console.log(type, value);
+            validator(type,value);
+          });
         }
+
       }
     });
   }
@@ -270,16 +321,72 @@ window.addEventListener('DOMContentLoaded', function() {
 
     });
 
-    
-
-
-
-
-
     addDots();
     startSlide(1500);
 
   };
 
   slider();
+
+  //Calculator
+  const calc = () => {
+    const calcBlock = document.querySelector('.calc-block');
+
+    calcBlock.addEventListener('input', (event)=>{
+      let target = event.target;
+      target = target.closest('.calc-item');
+      if(target) {
+        target.value = target.value.replace(/\D/g, '');
+      }
+    });
+  };
+
+  calc();
+
+
+  //Our team
+  const teamGallery = () =>{
+    const galery = document.getElementById('command');
+    let replacedImg;
+
+    galery.addEventListener('mouseover', (event)=>{
+      let target = event.target;
+      target = target.closest('.command__photo');
+      if(target) {
+        replacedImg = target.src;
+        target.src = target.dataset.img;
+      }
+    });
+
+    galery.addEventListener('mouseout', (event)=>{
+      let target = event.target;
+      target = target.closest('.command__photo');
+      if(target) {
+        target.src = replacedImg;
+        replacedImg = null;
+      }
+    });
+  };
+
+  teamGallery();
+
+  //footer
+  const footer = () => {
+    const footerForm = document.querySelector('.footer-form-input');
+
+    footerForm.addEventListener('change', (event) => {
+      let target = event.target;
+      let type = target.type;
+      let value = target.value;
+      console.log(target, type, value);
+      target.value = validator(type, value);
+    });
+
+  };
+
+  footer();
+
+
+
+
 });
