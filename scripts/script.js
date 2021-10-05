@@ -4,17 +4,62 @@ window.addEventListener('DOMContentLoaded', function() {
   const validator = (type, value) => {
     switch (type) {
       case 'text':
-        value = value.replace(/[^а-яё]/i, '');
+        value = value.replace(/[^а-яё \-]/ig, '');
         return value;
       case 'email':
-        let email = value.match(/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/g);
+        let email = value.replace(/[^a-zA-Z0-9_\-@.]/ig, '');
         return email;
       case 'tel':
-        let phone = value.match(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/g);
+        let phone = value.replace(/[^0-9()\-]/g, '');
         return phone;
     }
-
   };
+
+  const formHeandler = (event) => {
+    let target = event.target;
+      let type = target.type;
+      let value = target.value;
+      target.value = validator(type,value);
+  };
+
+  const fieldReplacer = (event) => {
+    let target = event.target;
+      let type = target.type;
+      let value = target.value;
+      let name = target.name;
+      if (type === 'text') {
+        value = value.replace(/ {1,}/g,' ').trim();
+        value = value.replace(/\-{2,}/g,'-');
+        target.value = value;
+      }
+      if (name === 'user_name') {
+        value = value.toLowerCase();
+        let nameArr = value.split(' ');
+        value = '';
+        nameArr.forEach((str)=>{
+          str = str[0].toUpperCase()+str.substring(1);
+          value += str + ' ';
+        });
+        value = value.trim();
+        target.value = value;
+      }
+  };
+
+  //Header
+  function header() {
+    const headerForm = document.querySelector('#form1');
+
+    headerForm.addEventListener('input', (event)=>{
+      formHeandler(event);
+    });
+
+    headerForm.addEventListener('change', (event)=>{
+      fieldReplacer(event);
+    });
+  }
+
+  header();
+
 
   //Timer
   function countTimer(deadLine) {
@@ -114,10 +159,8 @@ window.addEventListener('DOMContentLoaded', function() {
   function togglePopUp() {
 
     const popupBtn = document.querySelectorAll('.popup-btn'),
-          popupWindow = document.querySelector('.popup');
-    let name,
-        phone,
-        email;
+          popupWindow = document.querySelector('.popup'),
+          popupForm = popupWindow.querySelector('#form3');
 
     const popupHendler = function() {
 
@@ -176,46 +219,57 @@ window.addEventListener('DOMContentLoaded', function() {
 
         if (!target) {
           popupHendler();
-        } else {
-          const fieldHandler = () => {
-            const field = popupWindow.querySelector('input');
-            let type = field.type;
-            let value = field.value;
-            console.log(type, value);
-            validator(type,value);
-          };
-
-
-          popupWindow.querySelector('#form3-name').addEventListener('change', ()=>{
-            const field = popupWindow.querySelector('input');
-            let type = field.type;
-            let value = field.value;
-            console.log(type, value);
-            validator(type,value);
-
-          });
-          popupWindow.querySelector('#form3-phone').addEventListener('change', ()=>{
-          const field = popupWindow.querySelector('input');
-            let type = field.type;
-            let value = field.value;
-            console.log(type, value);
-            validator(type,value);
-          });
-          popupWindow.querySelector('#form3-email').addEventListener('change', ()=>{
-            const field = popupWindow.querySelector('input');
-            let type = field.type;
-            let value = field.value;
-            console.log(type, value);
-            validator(type,value);
-          });
         }
-
       }
+    });
+
+    popupForm.addEventListener('input', (event)=>{
+      formHeandler(event);
+    });
+
+    popupForm.addEventListener('change', (event)=>{
+      fieldReplacer(event);
     });
   }
 
   togglePopUp();
 
+   //Tabs
+
+  const tabs = () => {
+
+    const tabHeader = document.querySelector('.service-header'),
+          tabs = tabHeader.querySelectorAll('.service-header-tab'),
+          tabContent = document.querySelectorAll('.service-tab');
+          tabHeader.addEventListener('click', (event) => {
+
+            let target = event.target;
+            target = target.closest('.service-header-tab');
+
+            const toggleTabContent = (index) => {
+              for(let i = 0; i < tabContent.length; i++) {
+                if (i === index) {
+                  tabContent[i].classList.remove('d-none');
+                  tabs[i].classList.add('active');
+                } else {
+                  tabContent[i].classList.add('d-none');
+                  tabs[i].classList.remove('active');
+                }
+              }
+            };
+            
+            if(target) {
+              tabs.forEach((item, i) => {
+                if(item === target) {
+                  toggleTabContent(i);
+                }
+              });
+            }
+          });
+  };
+
+  tabs();
+  
   //Slider
 
   const slider = () => {
@@ -374,14 +428,13 @@ window.addEventListener('DOMContentLoaded', function() {
   const footer = () => {
     const footerForm = document.querySelector('.footer-form-input');
 
-    footerForm.addEventListener('change', (event) => {
-      let target = event.target;
-      let type = target.type;
-      let value = target.value;
-      console.log(target, type, value);
-      target.value = validator(type, value);
+    footerForm.addEventListener('input', (event)=>{
+      formHeandler(event);
     });
 
+    footerForm.addEventListener('change', (event)=>{
+      fieldReplacer(event);
+    });
   };
 
   footer();
