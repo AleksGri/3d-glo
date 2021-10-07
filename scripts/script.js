@@ -53,24 +53,26 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // sent-ajax-form
 
-  const postData = (body, loadData, outputData, errorData) => {
+  const postData = (body, loadData) => {
     
-    const request = new XMLHttpRequest();
+    return new Promise((resolve,reject)=>{
+      const request = new XMLHttpRequest();
           
-    request.addEventListener('readystatechange',(event) => {
-      loadData();
-      if(request.readyState !== 4) {
-        return;
-      }
-      if(request.status === 200) {
-          outputData();
-      } else {
-        errorData();
-      }
+      request.addEventListener('readystatechange',(event) => {
+        loadData();
+        if(request.readyState !== 4) {
+          return;
+        }
+        if(request.status === 200) {
+          resolve();
+        } else {
+          reject(request.statusText);
+        }
+      });
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'Application/json');
+      request.send(JSON.stringify(body));
     });
-    request.open('POST', './server.php');
-    request.setRequestHeader('Content-Type', 'Application/json');
-    request.send(JSON.stringify(body));
   };
 
   const formSender = (event, element) => {
@@ -93,21 +95,21 @@ window.addEventListener('DOMContentLoaded', function() {
     postData(body,
       ()=>{
         statuseMessage.textContent = loadMessage;
-      },
-      ()=>{
-        statuseMessage.textContent = succsessMessage;
-        element.reset();
-        setInterval(()=>{
-          statuseMessage.remove();
-        }, 3000);
-      },
-      ()=>{
-        statuseMessage.textContent = errorMesssage;
-      }
-    );
+      })
+    .then(()=>{
+            statuseMessage.textContent = succsessMessage;
+          })
+    .catch((error)=>{
+            statuseMessage.textContent = errorMesssage;
+            console.error(error);
+          })
+    .finally(()=>{
+            element.reset();
+            setInterval(()=>{
+              statuseMessage.remove();
+            }, 3000);
+          });
   };
-
-
 
   //Header
   function header() {
