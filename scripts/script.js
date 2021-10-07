@@ -111,26 +111,6 @@ window.addEventListener('DOMContentLoaded', function() {
           });
   };
 
-  //Header
-  function header() {
-    const headerForm = document.querySelector('#form1');
-
-    headerForm.addEventListener('input', (event)=>{
-      formHeandler(event);
-    });
-
-    headerForm.addEventListener('change', (event)=>{
-      fieldReplacer(event);
-    });
-
-    headerForm.addEventListener('submit', (event) => {
-      formSender(event, headerForm);
-    });
-  }
-
-  header();
-
-
   //Timer
   function countTimer(deadLine) {
     const timerHours = document.querySelector('#timer-hours'),
@@ -291,18 +271,6 @@ window.addEventListener('DOMContentLoaded', function() {
           popupHendler();
         }
       }
-    });
-
-    popupForm.addEventListener('input', (event)=>{
-      formHeandler(event);
-    });
-
-    popupForm.addEventListener('change', (event)=>{
-      fieldReplacer(event);
-    });
-
-    popupForm.addEventListener('submit', (event) => {
-      formSender(event, popupForm);
     });
   }
 
@@ -535,23 +503,31 @@ window.addEventListener('DOMContentLoaded', function() {
 
   teamGallery();
 
-  //footer
-  const footer = () => {
-    const footerForm = document.querySelector('.footer-form');
+ //forms
 
-    footerForm.addEventListener('input', (event)=>{
-      formHeandler(event);
-    });
+ const forms = () => {
 
-    footerForm.addEventListener('change', (event)=>{
-      fieldReplacer(event);
-    });
+  const body = document.querySelector('body');
 
-    footerForm.addEventListener('submit', (event) => {
-      formSender(event, footerForm);
-    });
-  };
+  body.addEventListener('input', (event)=>{
+    let target = event.target;
+    target = target.closest('form');
+    formHeandler(event);
+  });
 
-  footer();
+  body.addEventListener('change', (event)=>{
+    let target = event.target;
+    target = target.closest('form');
+    fieldReplacer(event);
+  });
+
+  body.addEventListener('submit', (event) => {
+    let target = event.target;
+    target = target.closest('form');
+    formSender(event, target);
+  });
+ };
+
+ forms();
 
 });
