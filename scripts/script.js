@@ -53,26 +53,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // sent-ajax-form
 
-  const postData = (body, loadData) => {
+  const postData = (body) => {
     
-    return new Promise((resolve,reject)=>{
-      const request = new XMLHttpRequest();
-          
-      request.addEventListener('readystatechange',(event) => {
-        loadData();
-        if(request.readyState !== 4) {
-          return;
-        }
-        if(request.status === 200) {
-          resolve();
-        } else {
-          reject(request.statusText);
-        }
-      });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'Application/json');
-      request.send(JSON.stringify(body));
-    });
+    return fetch('./server.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'Application/json'},
+                    body: JSON.stringify(body)
+                });
   };
 
   const formSender = (event, element) => {
@@ -92,11 +79,13 @@ window.addEventListener('DOMContentLoaded', function() {
       body[key] = val;
     });
 
-    postData(body,
-      ()=>{
-        statuseMessage.textContent = loadMessage;
-      })
-    .then(()=>{
+    statuseMessage.textContent = loadMessage;
+
+    postData(body)
+    .then((response)=>{
+            if (response.status !== 200) {
+              throw new Error('Network status is not 200');
+            }
             statuseMessage.textContent = succsessMessage;
           })
     .catch((error)=>{
