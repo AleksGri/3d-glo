@@ -1,16 +1,21 @@
 window.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
-  const validator = (type, value) => {
+  const validator = (type, value, name) => {
     switch (type) {
       case 'text':
-        value = value.replace(/[^а-яё \-]/ig, '');
-        return value;
+        if(name === 'user_name') {
+          value = value.replace(/[^а-яё IVXL\-]/ig, '');
+          return value;
+        } else {
+          value = value.replace(/[^а-яё ,!?\d\-\.]/ig, '');
+          return value;
+        }     
       case 'email':
         let email = value.replace(/[^a-zA-Z0-9_\-@.]/ig, '');
         return email;
       case 'tel':
-        let phone = value.replace(/[^0-9()\-]/g, '');
+        let phone = value.replace(/[^0-9+]/g, '');
         return phone;
     }
   };
@@ -19,7 +24,8 @@ window.addEventListener('DOMContentLoaded', function() {
     let target = event.target;
       let type = target.type;
       let value = target.value;
-      target.value = validator(type,value);
+      let name = target.name;
+      target.value = validator(type,value,name);
   };
 
   const fieldReplacer = (event) => {
@@ -45,6 +51,64 @@ window.addEventListener('DOMContentLoaded', function() {
       }
   };
 
+  // sent-ajax-form
+
+  const postData = (body, loadData, outputData, errorData) => {
+    
+    const request = new XMLHttpRequest();
+          
+    request.addEventListener('readystatechange',(event) => {
+      loadData();
+      if(request.readyState !== 4) {
+        return;
+      }
+      if(request.status === 200) {
+          outputData();
+      } else {
+        errorData();
+      }
+    });
+    request.open('POST', './server.php');
+    request.setRequestHeader('Content-Type', 'Application/json');
+    request.send(JSON.stringify(body));
+  };
+
+  const formSender = (event, element) => {
+    event.preventDefault();
+
+    const errorMesssage = 'Что-то пошло не так...',
+          loadMessage = 'Загрузка...',
+          succsessMessage = 'Спасибо!!! Мы скоро с Вами свяжемся...',
+          statuseMessage = document.createElement('div'),
+          formData = new FormData(element),
+          body = {};
+    
+    statuseMessage.style.color = '#fff';
+    element.append(statuseMessage);
+
+    formData.forEach((val, key) => {
+      body[key] = val;
+    });
+
+    postData(body,
+      ()=>{
+        statuseMessage.textContent = loadMessage;
+      },
+      ()=>{
+        statuseMessage.textContent = succsessMessage;
+        element.reset();
+        setInterval(()=>{
+          statuseMessage.remove();
+        }, 3000);
+      },
+      ()=>{
+        statuseMessage.textContent = errorMesssage;
+      }
+    );
+  };
+
+
+
   //Header
   function header() {
     const headerForm = document.querySelector('#form1');
@@ -55,6 +119,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
     headerForm.addEventListener('change', (event)=>{
       fieldReplacer(event);
+    });
+
+    headerForm.addEventListener('submit', (event) => {
+      formSender(event, headerForm);
     });
   }
 
@@ -230,6 +298,10 @@ window.addEventListener('DOMContentLoaded', function() {
     popupForm.addEventListener('change', (event)=>{
       fieldReplacer(event);
     });
+
+    popupForm.addEventListener('submit', (event) => {
+      formSender(event, popupForm);
+    });
   }
 
   togglePopUp();
@@ -271,7 +343,6 @@ window.addEventListener('DOMContentLoaded', function() {
   tabs();
   
   //Slider
-
   const slider = () => {
 
     const slide = document.querySelectorAll('.portfolio-item'),
@@ -464,7 +535,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   //footer
   const footer = () => {
-    const footerForm = document.querySelector('.footer-form-input');
+    const footerForm = document.querySelector('.footer-form');
 
     footerForm.addEventListener('input', (event)=>{
       formHeandler(event);
@@ -473,11 +544,12 @@ window.addEventListener('DOMContentLoaded', function() {
     footerForm.addEventListener('change', (event)=>{
       fieldReplacer(event);
     });
+
+    footerForm.addEventListener('submit', (event) => {
+      formSender(event, footerForm);
+    });
   };
 
   footer();
-
-
-
 
 });
