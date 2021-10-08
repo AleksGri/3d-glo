@@ -11,12 +11,10 @@ const calc = (price = 100) => {
     const calcSquare = calcSquareValue.value,
           calcCount = calcCountValue.value,
           calcDay = calcDayValue.value,
-          calcType = calcTypeValue.options[calcTypeValue.selectedIndex].value;
-
-    console.log(calcType);
+          calcType = calcTypeValue.options[calcTypeValue.selectedIndex];
 
     if (calcType && calcSquare ) {
-      total = calcType*calcSquare*price;
+      total = 1 *calcSquare*price;
     }
 
     if (calcCount > 1 ) {
@@ -29,7 +27,7 @@ const calc = (price = 100) => {
       total *= 1.5;
     }
 
-    totalValue.textContent = total
+    totalValue.textContent = total;
   };
 
   calcBlock.addEventListener('input', (event)=>{
@@ -47,3 +45,5 @@ const calc = (price = 100) => {
     }
   });
 };
+
+export default calc;

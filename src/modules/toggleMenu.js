@@ -43,3 +43,5 @@ function toggleMenu(){
     }
   });
 }
+
+export default toggleMenu;

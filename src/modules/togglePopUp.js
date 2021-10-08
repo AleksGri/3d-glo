@@ -65,3 +65,5 @@ function togglePopUp() {
     }
   });
 }
+
+export default togglePopUp;

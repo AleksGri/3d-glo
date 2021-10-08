@@ -118,3 +118,5 @@ const forms = () => {
     formSender(event, target);
   });
 };
+
+export default forms;

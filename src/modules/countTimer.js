@@ -38,3 +38,5 @@ function countTimer(deadLine) {
     timerNumbers.style.color = 'red';
   }
 }
+
+export default countTimer;
