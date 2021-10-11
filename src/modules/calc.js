@@ -11,10 +11,10 @@ const calc = (price = 100) => {
     const calcSquare = calcSquareValue.value,
           calcCount = calcCountValue.value,
           calcDay = calcDayValue.value,
-          calcType = calcTypeValue.options[calcTypeValue.selectedIndex];
+          calcType = +calcTypeValue.options[calcTypeValue.selectedIndex].value;
 
     if (calcType && calcSquare ) {
-      total = 1 *calcSquare*price;
+      total =  calcType*calcSquare*price;
     }
 
     if (calcCount > 1 ) {

@@ -103,14 +103,19 @@ const forms = () => {
   body.addEventListener('input', (event)=>{
     let target = event.target;
     target = target.closest('form');
-    formHeandler(event);
+    if(target) {
+      formHeandler(event);
+    }
   });
 
   body.addEventListener('change', (event)=>{
     let target = event.target;
     target = target.closest('form');
-    fieldReplacer(event);
+    if(target) {
+      fieldReplacer(event);
+    }
   });
+
 
   body.addEventListener('submit', (event) => {
     let target = event.target;
