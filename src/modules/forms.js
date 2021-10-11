@@ -49,18 +49,17 @@ const forms = () => {
       target.value = value;
     }
     if (type === 'tel') {
-      const template = /[\D]{,11}/;
-      if (template.test(value)) {
-        console.log(target.value);
-        target.value = ' ';
+        const template = /.{11,}/;
+        if(!template.test(value)) {
+          target.value = '';
+        }
       }
-    }
-
-      value = value.replace(/ {1,}/g,' ').trim();
-      value = value.replace(/\-{2,}/g,'-');
-      target.value = value;
-    
-
+      if (type === 'email') {
+        const template = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(!template.test(value)) {
+          target.value = '';
+        }
+      }
   };
 
   // sent-ajax-form
