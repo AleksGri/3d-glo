@@ -13,6 +13,12 @@ module.exports = {
     hot: true,
     writeToDisk: true 
   },
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 200,
+    poll: 1000,
+    ignored: ['**/files/**/*.js', '**/node_modules'],
+  },
   module: {
     rules: [
       {
