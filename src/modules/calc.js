@@ -33,7 +33,7 @@ const calc = (price = 100) => {
   calcBlock.addEventListener('input', (event)=>{
     let target = event.target;
     target = target.closest('.calc-item');
-    if(target) {
+    if(target && !target.classList.contains('calc-type')) {
       target.value = target.value.replace(/\D/g, '');
     }
   });

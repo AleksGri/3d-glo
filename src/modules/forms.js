@@ -48,6 +48,19 @@ const forms = () => {
       value = value.trim();
       target.value = value;
     }
+    if (type === 'tel') {
+      const template = /[\D]{,11}/;
+      if (template.test(value)) {
+        console.log(target.value);
+        target.value = ' ';
+      }
+    }
+
+      value = value.replace(/ {1,}/g,' ').trim();
+      value = value.replace(/\-{2,}/g,'-');
+      target.value = value;
+    
+
   };
 
   // sent-ajax-form
@@ -118,8 +131,28 @@ const forms = () => {
 
 
   body.addEventListener('submit', (event) => {
+    event.preventDefault();
     let target = event.target;
     target = target.closest('form');
+    
+    target.childNodes[1].childNodes[1].childNodes[1].childNodes[1].style.background = '#ffffff';
+    target.childNodes[1].childNodes[1].childNodes[3].childNodes[1].style.background = '#ffffff';
+    target.childNodes[1].childNodes[1].childNodes[5].childNodes[1].style.background = '#ffffff';
+    
+    if (target.childNodes[1].childNodes[1].childNodes[1].childNodes[1].value === '') {
+      target.childNodes[1].childNodes[1].childNodes[1].childNodes[1].style.background = '#de9a8e';
+      return;
+    }
+    if (target.childNodes[1].childNodes[1].childNodes[3].childNodes[1].value === '') {
+      target.childNodes[1].childNodes[1].childNodes[3].childNodes[1].style.background = '#de9a8e';
+      return;
+    }
+    if (target.childNodes[1].childNodes[1].childNodes[5].childNodes[1].value === '') {
+      target.childNodes[1].childNodes[1].childNodes[5].childNodes[1].style.background = '#de9a8e';
+      return;
+    }
+
+    fieldReplacer(event);
     formSender(event, target);
   });
 };
