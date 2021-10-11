@@ -33,11 +33,9 @@ function toggleMenu(){
     if(target.classList.contains('close-btn')) {
       menuHandler();
     } else {
-      console.log(target);
       target = target.closest('li');
-      console.log(target);
+      document.location.replace(target.childNodes[0].href);
        if (target) {
-        console.log("target");
         menuHandler();
       }
     }

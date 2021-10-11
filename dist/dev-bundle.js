@@ -427,7 +427,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction toggleMenu() {\n  var menu = document.querySelector('menu'),\n      main = document.querySelector('main');\n\n  var menuHandler = function menuHandler() {\n    if (!menu.style.transform || menu.style.transform === 'translate(-100%)') {\n      menu.style.transform = 'translate(0)';\n    } else {\n      menu.style.transform = 'translate(-100%)';\n    }\n  };\n\n  main.addEventListener('click', function (event) {\n    var target = event.target;\n    target = target.closest('.menu');\n\n    if (target) {\n      menuHandler();\n    } else {\n      var _target = event.target;\n      _target = _target.closest('menu');\n\n      if (!_target && menu.style.transform === 'translate(0px)') {\n        menuHandler();\n      }\n    }\n  });\n  menu.addEventListener('click', function (event) {\n    var target = event.target;\n\n    if (target.classList.contains('close-btn')) {\n      menuHandler();\n    } else {\n      console.log(target);\n      target = target.closest('li');\n      console.log(target);\n\n      if (target) {\n        console.log(\"target\");\n        menuHandler();\n      }\n    }\n  });\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleMenu);\n\n//# sourceURL=webpack://3d-glo/./src/modules/toggleMenu.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction toggleMenu() {\n  var menu = document.querySelector('menu'),\n      main = document.querySelector('main');\n\n  var menuHandler = function menuHandler() {\n    if (!menu.style.transform || menu.style.transform === 'translate(-100%)') {\n      menu.style.transform = 'translate(0)';\n    } else {\n      menu.style.transform = 'translate(-100%)';\n    }\n  };\n\n  main.addEventListener('click', function (event) {\n    var target = event.target;\n    target = target.closest('.menu');\n\n    if (target) {\n      menuHandler();\n    } else {\n      var _target = event.target;\n      _target = _target.closest('menu');\n\n      if (!_target && menu.style.transform === 'translate(0px)') {\n        menuHandler();\n      }\n    }\n  });\n  menu.addEventListener('click', function (event) {\n    var target = event.target;\n\n    if (target.classList.contains('close-btn')) {\n      menuHandler();\n    } else {\n      target = target.closest('li');\n      document.location.replace(target.childNodes[0].href);\n\n      if (target) {\n        menuHandler();\n      }\n    }\n  });\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleMenu);\n\n//# sourceURL=webpack://3d-glo/./src/modules/toggleMenu.js?");
 
 /***/ }),
 
@@ -533,7 +533,7 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("e170a043fbed74a8cffb")
+/******/ 		__webpack_require__.h = () => ("21f0463fd202d3ddb3b0")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
