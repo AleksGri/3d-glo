@@ -10,7 +10,7 @@ import teamGallery from './modules/teamGallery';
 import forms from './modules/forms';
 
 //Timer
-countTimer('15:20 5 october 2021');
+countTimer('15:20 13 october 2021');
 //Menu
 toggleMenu();
 //PopUp
